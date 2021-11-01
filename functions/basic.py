@@ -23,8 +23,8 @@ class Base(Functions):
     def greeting(self):
         self.speak("Hello sir Hope Doing Great")
         self.speak("Authenticate Yourself")
-        # self.authentication()
-        self.works()
+        self.authentication()
+        # self.works()
 
     def authentication(self):
         print("Tell me Your ID")
@@ -72,12 +72,15 @@ class Base(Functions):
         work = self.voice_conv()
         if re.search("Whatsapp", work, re.IGNORECASE):
             self.open_whatsapp()
+            flag = True
             self.works()
         elif re.search("explorer", work, re.IGNORECASE):
             self.open_file_explorer()
+            flag = True
             self.works()
-        elif re.search("music",work,re.IGNORECASE):
+        elif re.search("music", work, re.IGNORECASE):
             self.play_song()
+            flag = True
             self.works()
 
         elif work.lower() in C.LEXIT:
