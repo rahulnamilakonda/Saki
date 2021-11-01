@@ -1,23 +1,33 @@
 import calendar
 import datetime
 import re
-from functions.browser import Browser
+
 import pyttsx3
 import speech_recognition as SR
+from functions.constants import Constant as C
+from functions.functions import Functions
 
 
-class Base:
+class Base(Functions):
     def __init__(self):
+        super(Base, self).__init__()
         self.engine = pyttsx3.init()
         self.voices = self.engine.getProperty('voices')
         self.engine.setProperty('voice', self.voices[1].id)
 
+    def speak(self, audio):
+        print(audio)
+        self.engine.say(audio)
+        self.engine.runAndWait()
+
     def greeting(self):
         self.speak("Hello sir Hope Doing Great")
         self.speak("Authenticate Yourself")
-        self.authentication()
+        # self.authentication()
+        self.works()
 
     def authentication(self):
+        print("Tell me Your ID")
         data = self.voice_conv()
         if re.search("567", data, re.IGNORECASE):
 
@@ -28,11 +38,6 @@ class Base:
             self.gretting_time()
         else:
             self.speak("Sorry you are not correct one")
-
-    def speak(self, audio):
-        print(audio)
-        self.engine.say(audio)
-        self.engine.runAndWait()
 
     def voice_conv(self):
         r = SR.Recognizer()
@@ -56,5 +61,28 @@ class Base:
         self.speak("Month is " + str(month))
         self.speak("Today is " + str(week))
         self.speak("What can i do for you sir")
-        work=self.voice_conv()
-        self.works(work)
+        self.works()
+
+    def works(self):
+        flag = False
+        # For The second time Usage
+        if flag == True:
+            print("AnyThing Else Sir")
+
+        work = self.voice_conv()
+        if re.search("Whatsapp", work, re.IGNORECASE):
+            self.open_whatsapp()
+            self.works()
+        elif re.search("explorer", work, re.IGNORECASE):
+            self.open_file_explorer()
+            self.works()
+        elif re.search("music",work,re.IGNORECASE):
+            self.play_song()
+            self.works()
+
+        elif work.lower() in C.LEXIT:
+            self.speak("Bye Sir Have a Good Day")
+            return
+        else:
+            print("Sorry Try Again")
+            self.works()
