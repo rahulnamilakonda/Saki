@@ -1,11 +1,11 @@
 import os
 import time
 import webbrowser
-from playsound import playsound
-from selenium import webdriver
 
 # from functions.basic import Base
 from functions.constants import Constant as cs
+from playsound import playsound
+from selenium import webdriver
 
 
 class Functions():
@@ -21,6 +21,7 @@ class Functions():
         print("opening Whatsapp")
         webbrowser.open("https://web.whatsapp.com/")
         time.sleep(30)
+        # Closes After 30 Seconds
         os.system("TASKKILL /F /IM firefox.exe")
 
     def open_file_explorer(self):
